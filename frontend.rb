@@ -1,5 +1,20 @@
 require 'unirest'
+require 'tty-prompt'
 require 'pp'
+
+response = Unirest.get("localhost:3000/all_products")
+
+products = response.body
+
+prompt = TTY::Prompt.new
+
+user_input = prompt.select("Which product would you like?", ["Bloom","What's the Story MorningGlory?"])
+p user_input
+
+#products.each do |product|
+ # p "here is a product's name"
+  #p product['name']
+#end
 
 base_url = "http://localhost:3000/v2"
 system "clear"
