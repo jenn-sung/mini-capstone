@@ -1,1 +1,0 @@
-Product.create({name: "Transformer", price: 15, description: "A child's robot toy", image: "URL"})

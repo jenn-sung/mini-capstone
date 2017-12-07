@@ -9,11 +9,13 @@ class V2::ProductsController < ApplicationController
     products = Product.all 
     render json: products.as_json
   end 
+  
   def show
     the_id = params['id']
     product = Product.find_by(id: the_id)
     render json: product.as_json
   end
+  
   def create
     product = Product.new(
       name: params['name'],
@@ -21,10 +23,10 @@ class V2::ProductsController < ApplicationController
       description: params['description'],
       image: params['image']
     )
-    recipe.save
-
-    render json: recipe.as_json
+    product.save
+    render json: product.as_json
   end
+  
   def update
     the_id = params['id']
     product = Product.find_by(id: the_id)
@@ -35,6 +37,7 @@ class V2::ProductsController < ApplicationController
     product.save
     render json: product.as_json
   end
+  
   def destroy
     the_id = params['id']
     product = Product.find_by(id: the_id)
