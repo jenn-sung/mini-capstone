@@ -1,9 +1,5 @@
 class V2::ProductsController < ApplicationController
 
-  def toy
-    item = toy['my_products']
-    render json: {today: "monday"}
-  end
 
   def index
     products = Product.all 

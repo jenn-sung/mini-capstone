@@ -4,6 +4,8 @@ Rails.application.routes.draw do
     get '/all_products' => "products#the_products"
     get '/product' => 'products#one_product'
     get '/product_two' => 'products#two_products'
+    get '/show_product' => 'products#show'
+    get '/one_of_products/:id' => 'products#segment/'
   end
 
   namespace :v2 do

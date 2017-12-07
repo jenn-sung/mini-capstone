@@ -1,5 +1,6 @@
 class V1::ProductsController < ApplicationController
   def the_products
+    params["message"]
     products = Product.all
     render json: product.as_json
   end
@@ -14,4 +15,15 @@ class V1::ProductsController < ApplicationController
     render json: product.as_json
   end
 
-end 
+  def show
+    product_name + params['name']
+    product = Product.find_by(name: product_name)
+    render json: product.as_json
+  end
+
+  def segment
+    the_id = params['id']
+    product = Product.find_by(id: the_id)
+    render json: product.as_json
+  end
+end   
