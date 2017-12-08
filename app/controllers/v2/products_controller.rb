@@ -1,6 +1,5 @@
 class V2::ProductsController < ApplicationController
 
-
   def index
     products = Product.all 
     render json: products.as_json
@@ -41,6 +40,9 @@ class V2::ProductsController < ApplicationController
     render json: "You have deleted a product."
   end
 
-
+  def less_than_two
+    less_than_two = Product.is_discounted
+    render json: product.as_json
+  end
 end
 
