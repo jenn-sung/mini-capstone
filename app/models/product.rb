@@ -4,19 +4,23 @@ class Product < ApplicationRecord
       name: name, 
       price: price, 
       description: description, 
-      image: image
+      image: image,
+      is_discounted?: is_discounted?,
+      tax: tax,
+      total: total
     }
   end
 
+  def is_discounted?
+   if price < 2
+  end
 
-  def self.is_discounted
-    products = Products.all
-    product.each do |product|
-    if product.price < 2
-      return true
-    else
-      return false
-    end
+  def tax
+    price * 0.09
+  end
+
+  def total
+    price + tax
   end
 end
  
