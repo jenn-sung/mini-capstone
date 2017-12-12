@@ -6,7 +6,7 @@ class V2::ProductsController < ApplicationController
   end 
   
   def show
-    the_id = params['id']
+    the_id = params[:id]
     product = Product.find_by(id: the_id)
     render json: product.as_json
   end
@@ -26,9 +26,9 @@ class V2::ProductsController < ApplicationController
   end
   
   def update
-    the_id = params['id']
+    the_id = params[:id]
     product = Product.find_by(id: the_id)
-    product.name = params['name']
+    product.name = params ['name']
     product.price = params['price']
     product.description = params['description']
     product.image = params['image']
@@ -36,7 +36,7 @@ class V2::ProductsController < ApplicationController
     if product.save
       render json: product.as_json
     else
-      render json: {stop: "error"}
+      render json: {errors: product.errors.full_messages}
     end
   end
   
