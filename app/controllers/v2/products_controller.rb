@@ -18,8 +18,11 @@ class V2::ProductsController < ApplicationController
       description: params['description'],
       image: params['image']
     )
-    product.save
-    render json: product.as_json
+    if product.save
+      render json: product.as_json
+    else
+      render json: {errors: product.errors.full_messages}
+    end
   end
   
   def update
@@ -29,8 +32,12 @@ class V2::ProductsController < ApplicationController
     product.price = params['price']
     product.description = params['description']
     product.image = params['image']
-    product.save
-    render json: product.as_json
+   
+    if product.save
+      render json: product.as_json
+    else
+      render json: {stop: "error"}
+    end
   end
   
   def destroy
