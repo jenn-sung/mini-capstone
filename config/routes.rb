@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
 
   namespace :v1 do 
-    get '/all_products' => "products#the_products"
+    get '/all_products' => "products#products"
     get '/product' => 'products#one_product'
     get '/product_two' => 'products#two_products'
     get '/show_product' => 'products#show'
@@ -14,6 +14,11 @@ Rails.application.routes.draw do
     post '/products' => 'products#create'
     delete '/products/:id' => 'products#destroy'
     patch '/products/:id' => 'products#update'
+    get '/suppliers'  => 'suppliers#index'
+    get '/suppliers' => 'suppliers#create'
+    get '/suppliers/:id' => 'suppliers#show'
+    patch '/suppliers/:id' => 'suppliers#update'
+    delete '/suppliers/:id' => 'suppliers#destroy'
   end
 
 end

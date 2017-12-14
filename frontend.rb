@@ -20,15 +20,22 @@ require 'pp'
 #system "clear"
 
 p "[1] see all of my products"
+p "[1.1] search for products"
 p "[2] see a particular product"
 p "[3] create a new product"
 p "[4] modify a product"
 p "[5] which product would you like to delete"
+p "[6] see all of my suppliers"
 
 user_input = gets.chomp.to_i
 
 if user_input == 1
   response = Unirest.get("localhost:3000/products")
+  pp response.body
+elsif user_input == 1.1
+  p "What would you like to search for?"
+  search_input = gets.chomp
+  response = Unirest.get("localhost:3000/v2/products",parameters:{search_term: search_input})
   pp response.body
 elsif user_input == 2
   p "enter the id for the product you would like to look at"
@@ -64,4 +71,16 @@ elsif user_input == 5
   product_id = gets.chomp
   response = Unirest.destroy("localhost:3000/products/#{product_id}", parameters: the_params)
   pp response.body
+elsif user_input == 6
+  supplier_id = gets.chomp
+  response = Unirest.get("localhost:3000/suppliers")
+  pp response.body
+elsif user_input == 7
+  p "Enter the id of the supplier you would like to view."
+  supplier_id = gets.chomp
+  response = Unirest.get("localhost:3000/suppliers/#{supplier_id}")
+  pp response.body
+
+
+    
 end

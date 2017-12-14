@@ -1,7 +1,8 @@
 class V2::ProductsController < ApplicationController
 
   def index
-    products = Product.all 
+    search_term = params[:search_term]
+    products = Product.order(:id)
     render json: products.as_json
   end 
   
@@ -28,11 +29,10 @@ class V2::ProductsController < ApplicationController
   def update
     the_id = params[:id]
     product = Product.find_by(id: the_id)
-    product.name = params ['name']
+    product.name = params['name']
     product.price = params['price']
     product.description = params['description']
     product.image = params['image']
-   
     if product.save
       render json: product.as_json
     else

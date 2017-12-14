@@ -14,7 +14,9 @@ class Product < ApplicationRecord
       image: image,
       is_discounted?: is_discounted?,
       tax: tax,
-      total: total
+      total: total,
+      email: email,
+      phone_number: phone_number
     }
   end
 
