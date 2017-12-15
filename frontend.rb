@@ -25,7 +25,7 @@ p "[2] see a particular product"
 p "[3] create a new product"
 p "[4] modify a product"
 p "[5] which product would you like to delete"
-p "[6] see all of my suppliers"
+p "[6] see all suppliers"
 
 user_input = gets.chomp.to_i
 
@@ -43,10 +43,16 @@ elsif user_input == 2
   response = Unirest.get("localhost:3000/products/#{product_id}")
   pp response.body
 elsif user_input == 3
-  p "What is the toy's name?"
-  product_name = gets.chomp
-  p "Tell me what the price is."
-  product_price = gets.chomp.to_i
+  the_params = {}
+  p "Enter the product's information that you would like to create."
+  p "What is the name of the product?"
+  the_params['name'] = gets.chomp
+  p "What is the price of the product"
+  the_params['price'] = gets.chomp.to_i
+  p "What is the description of the product?"
+  the_params['description'] = gets.chomp
+  p "What is the image of the product?"
+  the_params['image'] = gets.chomp
   response = Unirest.post("localhost:3000/products", parameters: the_params)
   pp response.body
 elsif user_input == 4
@@ -69,7 +75,7 @@ elsif user_input == 4
 elsif user_input == 5
   p "Which product would you like to delete?"
   product_id = gets.chomp
-  response = Unirest.destroy("localhost:3000/products/#{product_id}", parameters: the_params)
+  response = Unirest.delete("localhost:3000/product_id/#{product_id}")
   pp response.body
 elsif user_input == 6
   supplier_id = gets.chomp
@@ -80,6 +86,14 @@ elsif user_input == 7
   supplier_id = gets.chomp
   response = Unirest.get("localhost:3000/suppliers/#{supplier_id}")
   pp response.body
+elsif user_input == 8
+  the_params = {}
+  p "Enter the supplier's information that you would like to create."
+  p "What is the supplier's name?"
+  the_params['name'] = gets.chomp
+  p "What is the email of the supplier?"
+  the_params['email'] 
+
 
 
     

@@ -1,10 +1,13 @@
 class Product < ApplicationRecord
+  belongs_to :supplier
+  has_many :images
 
   validates :price, numericality: {greater_than: 0}
   validates :price, presence: true
   validates :name, uniqueness: true
   validates :name, presence: true
   validates :description, length: {minimum: 10}
+
     
   def as_json
     {
@@ -15,8 +18,7 @@ class Product < ApplicationRecord
       is_discounted?: is_discounted?,
       tax: tax,
       total: total,
-      email: email,
-      phone_number: phone_number
+      the_supplier: supplier
     }
   end
 

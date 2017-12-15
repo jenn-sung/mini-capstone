@@ -1,17 +1,14 @@
 class V2::SuppliersController < ApplicationController
   
   def index
-    search_term = params[:search_term]
     suppliers = Supplier.order(:id)
-    render json: supplier.as_json
+    render json: suppliers.as_json
   end
 
   def show
     the_id = params[:id]
-    product = Supplier.find_by(id: the_id)
+    supplier = Supplier.find_by(id: the_id)
     render json: supplier.as_json
-  end
-
   end
 
   def create
@@ -21,9 +18,9 @@ class V2::SuppliersController < ApplicationController
       phone_number: params['phone_number']
       )
     if supplier.save
-      render json: supplier.as_json
+      render json: suppliers.as_json
     else
-      render json: {errors: supplier.errors.full_messages}
+      render json: {errors: suppliers.errors.full_messages}
     end
 
     def update
@@ -33,18 +30,17 @@ class V2::SuppliersController < ApplicationController
       supplier.email = params['email']
       supplier.phone_number = params['phone_number']
       if supplier.save
-        render json: supplier.as_json
+        render json: suppliers.as_json
       else
-        render json: {errors: supplier.errors.full_messages}
+        render json: {errors: suppliers.errors.full_messages}
       end
     end
 
     def destroy
       the_id = params['id']
-      product = Supplier.find_by(id: the_id)
-      product.destroy
-      render json: "You have deleted a product."
+      supplier = Supplier.find_by(id: the_id)
+      supplier.destroy
+      render json: {message: "You have deleted a supplier."}
     end
-
   end
 end

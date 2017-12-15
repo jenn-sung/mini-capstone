@@ -1,9 +1,9 @@
 class V2::ProductsController < ApplicationController
 
   def index
-    search_term = params[:search_term]
-    products = Product.order(:id)
-    render json: products.as_json
+    products = Product.all
+    render json: products
+    #render json: {}
   end 
   
   def show
