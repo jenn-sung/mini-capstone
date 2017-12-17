@@ -14,7 +14,7 @@ class Product < ApplicationRecord
       name: name, 
       price: price, 
       description: description, 
-      image: image,
+      images: images,
       is_discounted?: is_discounted?,
       tax: tax,
       total: total,

@@ -39,3 +39,5 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem "seed_dump"
 
+gem 'bcrypt', '~> 3.1.7'
+

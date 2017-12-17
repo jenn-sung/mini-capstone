@@ -26,11 +26,14 @@ p "[3] create a new product"
 p "[4] modify a product"
 p "[5] which product would you like to delete"
 p "[6] see all suppliers"
+p "[7] see a particular supplier"
+p "[8] create a new supplier"
+p "[9] Sign up"
 
 user_input = gets.chomp.to_i
 
 if user_input == 1
-  response = Unirest.get("localhost:3000/products")
+  response = Unirest.get("localhost:3000/v2/products")
   pp response.body
 elsif user_input == 1.1
   p "What would you like to search for?"
@@ -56,7 +59,6 @@ elsif user_input == 3
   response = Unirest.post("localhost:3000/products", parameters: the_params)
   pp response.body
 elsif user_input == 4
-  p "let's modify a product"
   p "what product id would you like to modify?"
   product_id = gets.chomp
   response = Unirest.get("localhost:3000/products/#{product_id}")
@@ -78,6 +80,7 @@ elsif user_input == 5
   response = Unirest.delete("localhost:3000/product_id/#{product_id}")
   pp response.body
 elsif user_input == 6
+  p "See all suppliers"
   supplier_id = gets.chomp
   response = Unirest.get("localhost:3000/suppliers")
   pp response.body
@@ -92,7 +95,28 @@ elsif user_input == 8
   p "What is the supplier's name?"
   the_params['name'] = gets.chomp
   p "What is the email of the supplier?"
-  the_params['email'] 
+  the_params['email'] = gets.chomp
+  p "What is the phone number of the supplier?"
+  the_params['phone_number'] = gets.chomp
+  response = Unirest.post("localhost:3000/suppliers/#{supplier_id}", parameters: the_params)
+  pp response.body
+elsif user_input == 9
+  the_params = {}
+  p "Sign up and enter your name!"
+  the_params['name'] = gets.chomp
+  p "Enter your email"
+  the_params['email'] = gets.chomp
+  p "Enter your password"
+  the_params['password'] = gets.chomp
+  p "Please confirm your password"
+  the_params['password_confirmation'] = gets.chomp
+  response = Unirest.post("localhost:3000/users", parameters: the_params)
+  pp response.body
+
+
+  
+
+
 
 
 
