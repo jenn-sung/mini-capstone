@@ -110,7 +110,7 @@ elsif user_input == 9
   the_params['password'] = gets.chomp
   p "Please confirm your password"
   the_params['password_confirmation'] = gets.chomp
-  response = Unirest.post("localhost:3000/users", parameters: the_params)
+  response = Unirest.post("localhost:3000/v2/users", parameters: the_params)
   pp response.body
 
 
