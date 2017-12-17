@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  
   namespace :v1 do 
     get '/all_products' => "products#products"
     get '/product' => 'products#one_product'
@@ -21,6 +22,7 @@ Rails.application.routes.draw do
     patch '/suppliers/:id' => 'suppliers#update'
     delete '/suppliers/:id' => 'suppliers#destroy'
 
+    post 'user_token' => 'user_token#create'
     post '/users' => 'users#create'
   end
 
