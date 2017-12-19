@@ -8,7 +8,15 @@ class Product < ApplicationRecord
   validates :name, presence: true
   validates :description, length: {minimum: 10}
 
-    
+  # def supplier
+  #   Supplier.find_by(id: supplier_id)
+  # end
+
+  # def images
+  #   Image.where(product_id: id)
+  # end
+
+
   def as_json
     {
       name: name, 
@@ -18,7 +26,8 @@ class Product < ApplicationRecord
       is_discounted?: is_discounted?,
       tax: tax,
       total: total,
-      the_supplier: supplier
+      the_supplier: supplier,
+      images: images
     }
   end
 
