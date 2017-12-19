@@ -1,6 +1,5 @@
 class V2::UsersController < ApplicationController
   
-
   def create
     user = User.new(
       name: params[:name],
