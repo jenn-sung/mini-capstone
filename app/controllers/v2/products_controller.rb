@@ -1,8 +1,10 @@
 class V2::ProductsController < ApplicationController
 
   def index
-    products = Product.all
-    render json: products.as_json
+    # products = Product.all
+    # render json: products.as_json
+    category = Category.find_by(id: params[:category_id_input])
+    products = category.products
   end 
   
   def show

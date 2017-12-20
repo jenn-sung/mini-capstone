@@ -21,7 +21,8 @@ while true
   system "clear"
 
   p "[1] see all of my products"
-  p "[1.1] search for products"
+  p "[1.1] search for a product"
+  p "[1.2] search for a category of a product"
   p "[2] see a particular product"
   p "[3] create a new product"
   p "[4] modify a product"
@@ -43,6 +44,10 @@ while true
     search_input = gets.chomp
     response = Unirest.get("localhost:3000/v2/products",parameters:{search_term: search_input})
     pp response.body
+  elsif user_input == 1.2
+    p "What is the id of the category you would like to look at?"
+    user_category_id = gets.chomp
+    response = Unirest.get("localhost:3000//products?category_id_input=#{user_category_id}")
   elsif user_input == 2
     p "enter the id for the product you would like to look at"
     product_id = gets.chomp
