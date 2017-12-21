@@ -33,7 +33,9 @@ while true
   p "[9] Sign up"
   p "[10] Log in"
   p "[11] Log out"
-
+  p "[12] Add a product to your cart"
+  p "[13] View your cart"
+  p "Exit"
   user_input = gets.chomp.to_i
 
   if user_input == 1
@@ -143,6 +145,17 @@ while true
     jwt = ""
     Unirest.clear_default_headers()
     p "You are logged out"
+  elsif user_input == 12
+    the_params = {}
+    p "Which products would you like to add to your cart?"
+    the_params[:product_id] = gets.chomp
+    p "How many do you want?"
+    the_params[:quantity] = gets.chomp
+    response = Unirest.post("localhost:3000/v2/carted_products", parameters: the_params)
+    pp response.body
+  elsif user_input == 13
+    response = Unirest.get("localhost:3000/v2/carted_products")
+    pp response.body  
   elsif user_input == 'exit'
     break
   end
