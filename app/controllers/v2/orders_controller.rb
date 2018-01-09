@@ -1,6 +1,6 @@
 class V2::OrdersController < ApplicationController
   def create
-    product = carted_product[params]
+    #product = carted_product[params]
     #product = Product.find_by(id: params[:product_id])
     carted_product = CartedProduct.where(user_id: current_user.id)
     calculated_subtotal = carted_product.price * params[:quantity]

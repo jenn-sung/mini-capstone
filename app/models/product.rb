@@ -2,7 +2,8 @@ class Product < ApplicationRecord
   has_many :orders, through: :carted_products
   belongs_to :supplier
   has_many :images
-  has_many :categories, through: :category_products9
+  has_many :categories, through: :category_products
+  has_many :category_products
 
   validates :price, numericality: {greater_than: 0}
   validates :price, presence: true
@@ -19,19 +20,19 @@ class Product < ApplicationRecord
   # end
 
 
-  # def as_json
-  #   {
-  #     name: name, 
-  #     price: price, 
-  #     description: description, 
-  #     images: images,
-  #     is_discounted?: is_discounted?,
-  #     tax: tax,
-  #     total: total,
-  #     supplier: supplier,
-  #     images: images
-  #   }
-  # end
+  def as_json
+    {
+      name: name, 
+      price: price, 
+      description: description, 
+      images: images,
+      is_discounted?: is_discounted?,
+      tax: tax,
+      total: total,
+      supplier: supplier.as_json,
+      images: images
+    }
+  end
 
   def is_discounted?
     price < 2
@@ -44,7 +45,15 @@ class Product < ApplicationRecord
   def total
     price + tax
   end
+
+  def less_than_two
+    less_than_two = Product.is_discounted
+    render json: product.as_json
+  end
+
 end
+
+
  
 
 

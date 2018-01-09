@@ -5,7 +5,7 @@ class V2::CartedProductsController < ApplicationController
       carted_products = CartedProduct.where(user_id: current_user.id)
       render json: carted_products.as_json
     else
-      render json: {}
+      render json: carted_products.as_json
     end
 
   end

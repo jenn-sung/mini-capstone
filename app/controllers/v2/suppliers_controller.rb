@@ -1,7 +1,8 @@
 class V2::SuppliersController < ApplicationController
   
   def index
-    suppliers = Supplier.order(:id)
+    suppliers = Supplier.all
+    #supplier = Supplier.order(:id)
     render json: suppliers.as_json
   end
 
@@ -18,29 +19,29 @@ class V2::SuppliersController < ApplicationController
       phone_number: params['phone_number']
       )
     if supplier.save
-      render json: suppliers.as_json
+      render json: supplier.as_json
     else
-      render json: {errors: suppliers.errors.full_messages}
+      render json: {errors: supplier.errors.full_messages}
     end
+  end
 
-    def update
-      the_id = params[:id]
-      supplier = Supplier.find_by(id: the_id)
-      supplier.name = params['name']
-      supplier.email = params['email']
-      supplier.phone_number = params['phone_number']
-      if supplier.save
-        render json: suppliers.as_json
-      else
-        render json: {errors: suppliers.errors.full_messages}
-      end
+  def update
+    the_id = params[:id]
+    supplier = Supplier.find_by(id: the_id)
+    supplier.name = params['name']
+    supplier.email = params['email']
+    supplier.phone_number = params['phone_number']
+    if supplier.save
+      render json: supplier.as_json
+    else
+      render json: {errors: supplier.errors.full_messages}
     end
+  end
 
-    def destroy
-      the_id = params['id']
-      supplier = Supplier.find_by(id: the_id)
-      supplier.destroy
-      render json: {message: "You have deleted a supplier."}
-    end
+  def destroy
+    the_id = params['id']
+    supplier = Supplier.find_by(id: the_id)
+    supplier.destroy
+    render json: {message: "You have deleted a supplier."}
   end
 end
