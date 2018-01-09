@@ -1,6 +1,8 @@
 class V2::OrdersController < ApplicationController
   def create
+    product = carted_product[params]
     #product = Product.find_by(id: params[:product_id])
+    carted_product = CartedProduct.where(user_id: current_user.id)
     calculated_subtotal = carted_product.price * params[:quantity]
     tax_rate = 0.09
     calculated_tax = calculated_subtotal * tax_rate
@@ -10,7 +12,7 @@ class V2::OrdersController < ApplicationController
     order = Order.new(
       user_id: current_user.id,
       #carted_product_id: params[:product_id], 
-      quantity: params[:quantity],
+      #quantity: params[:quantity],
       subtotal: params[:subtotal],
       tax: params[:tax],
       total: params[:total]
@@ -22,3 +24,7 @@ class V2::OrdersController < ApplicationController
     end
   end
 end
+
+
+
+ #products = Product.where("name LIKE ?", "%#{search}%").order(the_sort_attribute)

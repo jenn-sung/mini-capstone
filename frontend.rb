@@ -35,7 +35,8 @@ while true
   p "[11] Log out"
   p "[12] Add a product to your cart"
   p "[13] View your cart"
-  p "Exit"
+  p "[14] Place your order"
+  p "exit"
   user_input = gets.chomp.to_i
 
   if user_input == 1
@@ -49,11 +50,11 @@ while true
   elsif user_input == 1.2
     p "What is the id of the category you would like to look at?"
     user_category_id = gets.chomp
-    response = Unirest.get("localhost:3000//products?category_id_input=#{user_category_id}")
+    response = Unirest.get("localhost:3000/v2/products?category_id_input=#{user_category_id}")
   elsif user_input == 2
     p "enter the id for the product you would like to look at"
     product_id = gets.chomp
-    response = Unirest.get("localhost:3000/products/#{product_id}")
+    response = Unirest.get("localhost:3000/v2/products/#{product_id}")
     pp response.body
   elsif user_input == 3
     the_params = {}
@@ -66,12 +67,12 @@ while true
     the_params['description'] = gets.chomp
     p "What is the image of the product?"
     the_params['image'] = gets.chomp
-    response = Unirest.post("localhost:3000/products", parameters: the_params)
+    response = Unirest.post("localhost:3000/v2/products", parameters: the_params)
     pp response.body
   elsif user_input == 4
     p "what product id would you like to modify?"
     product_id = gets.chomp
-    response = Unirest.get("localhost:3000/products/#{product_id}")
+    response = Unirest.get("localhost:3000/v2/products/#{product_id}")
     #response = Unirest.get("#{base_url}/products/#{product_id}")
     the_params = {}
     p "Enter the original name of the product #{product_id['name']}"
@@ -82,7 +83,7 @@ while true
     the_params['description'] = gets.chomp
     p "Enter the original image url of the product #{product_id['image']}"
     the_params['image'] = gets.chomp
-    response = Unirest.patch("localhost:3000/products/#{product_id}", parameters: the_params)
+    response = Unirest.patch("localhost:3000/v2/products/#{product_id}", parameters: the_params)
     pp response.body
   elsif user_input == 5
     p "Which product would you like to delete?"
@@ -92,12 +93,12 @@ while true
   elsif user_input == 6
     p "See all suppliers"
     supplier_id = gets.chomp
-    response = Unirest.get("localhost:3000/suppliers")
+    response = Unirest.get("localhost:3000/v2/suppliers")
     pp response.body
   elsif user_input == 7
     p "Enter the id of the supplier you would like to view."
     supplier_id = gets.chomp
-    response = Unirest.get("localhost:3000/suppliers/#{supplier_id}")
+    response = Unirest.get("localhost:3000/v2/suppliers/#{supplier_id}")
     pp response.body
   elsif user_input == 8
     the_params = {}
@@ -108,7 +109,7 @@ while true
     the_params['email'] = gets.chomp
     p "What is the phone number of the supplier?"
     the_params['phone_number'] = gets.chomp
-    response = Unirest.post("localhost:3000/suppliers/#{supplier_id}", parameters: the_params)
+    response = Unirest.post("localhost:3000/v2/suppliers/#{supplier_id}", parameters: the_params)
     pp response.body
   elsif user_input == 9
     the_params = {}
@@ -156,6 +157,11 @@ while true
   elsif user_input == 13
     response = Unirest.get("localhost:3000/v2/carted_products")
     pp response.body  
+  elsif user_input == 14
+    p "Which order would you like to purchase?"
+    response = Unirest.post("localhost:3000/v2/orders")
+
+    
   elsif user_input == 'exit'
     break
   end
