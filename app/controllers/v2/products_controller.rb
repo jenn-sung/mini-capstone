@@ -3,6 +3,7 @@ class V2::ProductsController < ApplicationController
 
   def index
     products = Product.all
+    p current_user
     render json: products.as_json
     # category = Category.find_by(id: params[:category_id_input])
     # products = category.products
