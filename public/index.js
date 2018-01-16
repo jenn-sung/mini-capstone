@@ -1,5 +1,13 @@
 /* global Vue, VueRouter, axios */
 
+var LogoutPage = {
+  created: function() {
+    axios.defaults.headers.common["Authorization"] = undefined;
+    localStorage.removeItem("jwt");
+    router.push("/");
+  }
+};
+
 var SignupPage = {
   template: "#signup-page",
   data: function() {
@@ -49,14 +57,6 @@ var HomePage = {
   methods: {},
   computed: {}
 };
-
-
-// var router = new VueRouter({
-  // routes: [
-  //   { path: "/", component: HomePage }],
-  // scrollBehavior: function(to, from, savedPosition) {
-  //   return { x: 0, y: 0 };
-  // },
 
 var LoginPage = {
   template: "#login-page",
@@ -111,7 +111,7 @@ var NewProductPage = {
       axios
         .post("/v2/products", params)
         .then(function(response) {
-          router.push("/login");
+          router.push("/");
         })
         .catch(
           function(error) {
@@ -122,18 +122,18 @@ var NewProductPage = {
   }
 };
 
-
 var router = new VueRouter({
   routes: [
     { path: "/", component: HomePage },
     { path: "/signup", component: SignupPage },
     { path: "/login", component: LoginPage },
+    { path: "/logout", component: LogoutPage },
     { path: "/products/new", component: NewProductPage }
-  ]
+  ],
+  scrollBehavior: function(to, from, savedPosition) {
+    return { x: 0, y: 0 };
+  }
 });
-
-// });
-
 
 var app = new Vue({
   el: "#vue-app",
