@@ -1,38 +1,73 @@
-var productContainer = document.querySelector('.row');
-var productTemplate = document.querySelector('#product-card');
+/* global Vue, VueRouter, axios */
 
-axios.get("http://localhost:3000/v2/products").then(function(response) {
-  console.log(response.data);
+var SignupPage = {
+  template: "#signup-page",
+  data: function() {
+    return {
+      name: "",
+      email: "",
+      password: "",
+      passwordConfirmation: "",
+      errors: []
+    };
+  },
+  methods: {
+    submit: function() {
+      var params = {
+        name: this.name,
+        email: this.email,
+        password: this.password,
+        password_confirmation: this.passwordConfirmation
+      };
+      axios
+        .post("/v2/users", params)
+        .then(function(response) {
+          router.push("/login");
+        })
+        .catch(
+          function(error) {
+            this.errors = error.response.data.errors;
+          }.bind(this)
+        );
+    }
+  }
+};
 
-  var products = response.data;
-  for (var i = 0; i < products.length; i++) {
-    var productClone = productTemplate.content.cloneNode(true);
-    productClone.querySelector('.name').innerText = products[i].name;
-  } 
+var HomePage = {
+  template: "#home-page",
+  data: function() {
+    return {
+      products:[]
+
+    };
+  },
+  created: function() {
+    axios.get('v2/products').then(function(response) {
+      this.products = response.data;
+    }.bind(this));
+  },
+  methods: {},
+  computed: {}
+};
 
 
-// $(function() { 
-// var myChart = Highcharts.chart('container', {
-//     chart: {
-//       type: 'bar'
-//     },
-//     title: {
-//       text: 'Fruit Consumption'
-//     },
-//     xAxis: {
-//       categories: ['Apples', 'Bananas', 'Oranges']
-//     },
-//     yAxis: {
-//       title: {
-//         text: 'Fruit eaten'
-//       }
-//     },
-//     series: [{
-//       name: 'Jane',
-//       data: [1, 0, 4]
-//     }, {
-//       name: 'John',
-//       data: [5, 7, 3]
-//     }]
-//   });
+// var router = new VueRouter({
+  // routes: [
+  //   { path: "/", component: HomePage }],
+  // scrollBehavior: function(to, from, savedPosition) {
+  //   return { x: 0, y: 0 };
+  // },
+
+var router = new VueRouter({
+  routes: [
+    { path: "/", component: HomePage },
+    { path: "/signup", component: SignupPage }
+  ]
+});
+
+// });
+
+var app = new Vue({
+  el: "#vue-app",
+  router: router
 });
