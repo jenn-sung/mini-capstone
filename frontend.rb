@@ -37,6 +37,7 @@ while true
   p "[13] View your cart"
   p "[14] Place your order"
   p "exit"
+
   user_input = gets.chomp.to_i
 
   if user_input == 1
@@ -45,7 +46,7 @@ while true
   elsif user_input == 1.1
     p "What would you like to search for?"
     search_input = gets.chomp
-    response = Unirest.get("localhost:3000/v2/products",parameters:{search_term: search_input})
+    response = Unirest.get("localhost:3000/v2/products", parameters: {search_term: search_input})
     pp response.body
   elsif user_input == 1.2
     p "What is the id of the category you would like to look at?"
@@ -73,6 +74,8 @@ while true
     p "what product id would you like to modify?"
     product_id = gets.chomp
     response = Unirest.get("localhost:3000/v2/products/#{product_id}")
+    product = response.body
+    pp response.body
     #response = Unirest.get("#{base_url}/products/#{product_id}")
     the_params = {}
     p "Enter the original name of the product #{product_id['name']}"
@@ -138,28 +141,28 @@ while true
 
       }
     )
+
     jwt = response.body["jwt"]
     Unirest.default_header("Authorization", "Bearer #{jwt}")
-
     pp response.body
   elsif user_input == 11
     jwt = ""
     Unirest.clear_default_headers()
     p "You are logged out"
-  elsif user_input == 12
-    the_params = {}
-    p "Which products would you like to add to your cart?"
-    the_params[:product_id] = gets.chomp
-    p "How many do you want?"
-    the_params[:quantity] = gets.chomp
-    response = Unirest.post("localhost:3000/v2/carted_products", parameters: the_params)
-    pp response.body
-  elsif user_input == 13
-    response = Unirest.get("localhost:3000/v2/carted_products")
-    pp response.body  
-  elsif user_input == 14
-    p "Which order would you like to purchase?"
-    response = Unirest.post("localhost:3000/v2/orders")
+  # elsif user_input == 12
+  #   the_params = {}
+  #   p "Which products would you like to add to your cart?"
+  #   the_params[:product_id] = gets.chomp
+  #   p "How many do you want?"
+  #   the_params[:quantity] = gets.chomp
+  #   response = Unirest.post("localhost:3000/v2/carted_products", parameters: the_params)
+  #   pp response.body
+  # elsif user_input == 13
+  #   response = Unirest.get("localhost:3000/v2/carted_products")
+  #   pp response.body  
+  # elsif user_input == 14
+  #   p "Which order would you like to purchase?"
+  #   response = Unirest.post("localhost:3000/v2/orders")
 
     
   elsif user_input == 'exit'

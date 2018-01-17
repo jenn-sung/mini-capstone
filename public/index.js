@@ -58,6 +58,7 @@ var HomePage = {
   computed: {}
 };
 
+
 var LoginPage = {
   template: "#login-page",
   data: function() {
@@ -73,7 +74,7 @@ var LoginPage = {
         auth: { email: this.email, password: this.password }
       };
       axios
-        .post("/user_token", params)
+        .post("v2/user_token", params)
         .then(function(response) {
           axios.defaults.headers.common["Authorization"] =
             "Bearer " + response.data.jwt;
@@ -90,6 +91,7 @@ var LoginPage = {
     }
   }
 };
+
 
 var NewProductPage = {
   template: "#new-product-page",
@@ -122,13 +124,70 @@ var NewProductPage = {
   }
 };
 
+
+var ShowProductPage = {
+  template: "#show-product-page",
+  data: function() {
+    return {
+      product: {}
+
+    };
+  },
+  created: function() {
+    axios.get('/v2/products/' + this.$route.params.id).then(function(response) {
+      this.product = response.data;
+    }.bind(this));
+  },
+  methods: {},
+  computed: {}
+};
+
+
+var EditProductPage = {
+  template: "#edit-product-page",
+  data: function() {
+    return {
+      product: {},
+      errors: []
+    };
+  },
+  methods: {
+    editProduct: function() {
+      var params = {
+        name: this.product.name,
+        price: this.product.price,
+        description: this.product.description,
+      };
+      axios
+        .patch("/v2/products/" + this.$route.params.id, params)
+        .then(function(response) {
+          router.push("/");
+        })
+        .catch(
+          function(error) {
+            this.errors = error.response.data.errors;
+          }.bind(this)
+        );
+    }
+  },
+  created: function() {
+    axios.get('/v2/products/' + this.$route.params.id).then(function(response) {
+      this.product = response.data;
+    }.bind(this));
+  }
+};
+
+
+
 var router = new VueRouter({
   routes: [
     { path: "/", component: HomePage },
     { path: "/signup", component: SignupPage },
     { path: "/login", component: LoginPage },
     { path: "/logout", component: LogoutPage },
-    { path: "/products/new", component: NewProductPage }
+    { path: "/products/new", component: NewProductPage },
+    { path: "/products/:id", component: ShowProductPage },
+    { path: "/products/:id/edit", component: EditProductPage }
   ],
   scrollBehavior: function(to, from, savedPosition) {
     return { x: 0, y: 0 };
@@ -145,3 +204,4 @@ var app = new Vue({
     }
   }
 });
+

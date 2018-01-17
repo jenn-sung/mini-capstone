@@ -1,15 +1,17 @@
 class Product < ApplicationRecord
+  # belongs_to :user
+  has_many :carted_products
   has_many :orders, through: :carted_products
-  belongs_to :supplier
   has_many :images
   has_many :categories, through: :category_products
   has_many :category_products
+  belongs_to :supplier
 
-  validates :price, numericality: {greater_than: 0}
+  validates :price, numericality: { greater_than: 0 }
   validates :price, presence: true
   validates :name, uniqueness: true
   validates :name, presence: true
-  validates :description, length: {minimum: 10}
+  validates :description, length: { minimum: 5 }
 
   # def supplier
   #   Supplier.find_by(id: supplier_id)
@@ -22,6 +24,7 @@ class Product < ApplicationRecord
 
   def as_json
     {
+      id: id,
       name: name, 
       price: price, 
       description: description, 

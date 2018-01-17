@@ -3,14 +3,13 @@ class V2::ProductsController < ApplicationController
 
   def index
     products = Product.all
-    p current_user
     render json: products.as_json
     # category = Category.find_by(id: params[:category_id_input])
     # products = category.products
   end 
   
   def show
-    # the_id = params[:id]
+    the_id = params[:id]
     product = Product.find_by(id: the_id)
     render json: product.as_json
   end
@@ -20,7 +19,8 @@ class V2::ProductsController < ApplicationController
       name: params['name'],
       price: params['price'],
       description: params['description'],
-      image: params['image']
+      # image: params['image']
+      user_id: current_user.id
     )
     if product.save
       render json: product.as_json
@@ -36,13 +36,11 @@ class V2::ProductsController < ApplicationController
       name: params['name'],
       price: params['price'],
       description: params['description'],
-      image: params['image']
+      # image: params['image']
       )
-      if product.save
-        render json: product.as_json
-      else
-        render json: {errors: product.errors.full_messages}
-      end
+      render json: product.as_json
+    else
+      render json: {errors: product.errors.full_messages}
     end
   end
   
@@ -52,6 +50,4 @@ class V2::ProductsController < ApplicationController
     product.destroy
     render json: {message: "You have deleted a product."}
   end
-
 end
-
