@@ -50,14 +50,13 @@ var HomePage = {
     };
   },
   created: function() {
-    axios.get('v2/products').then(function(response) {
+    axios.get('/v2/products').then(function(response) {
       this.products = response.data;
     }.bind(this));
   },
   methods: {},
   computed: {}
 };
-
 
 var LoginPage = {
   template: "#login-page",
@@ -74,7 +73,7 @@ var LoginPage = {
         auth: { email: this.email, password: this.password }
       };
       axios
-        .post("v2/user_token", params)
+        .post("/user_token", params)
         .then(function(response) {
           axios.defaults.headers.common["Authorization"] =
             "Bearer " + response.data.jwt;
@@ -102,6 +101,9 @@ var NewProductPage = {
       description: "",
       errors: []
     };
+  },
+  created: function() {
+    console.log('new product');
   },
   methods: {
     addProduct: function() {
@@ -158,6 +160,7 @@ var EditProductPage = {
         price: this.product.price,
         description: this.product.description,
       };
+      console.log(params);
       axios
         .patch("/v2/products/" + this.$route.params.id, params)
         .then(function(response) {
@@ -171,12 +174,12 @@ var EditProductPage = {
     }
   },
   created: function() {
+    console.log('running created');
     axios.get('/v2/products/' + this.$route.params.id).then(function(response) {
-      this.product = response.data;
+      this.products = response.data;
     }.bind(this));
   }
 };
-
 
 
 var router = new VueRouter({

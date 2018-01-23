@@ -1,11 +1,11 @@
 class Product < ApplicationRecord
   # belongs_to :user
-  has_many :carted_products
-  has_many :orders, through: :carted_products
-  has_many :images
-  has_many :categories, through: :category_products
-  has_many :category_products
-  belongs_to :supplier
+  # has_many :carted_products
+  # has_many :orders, through: :carted_products
+  # has_many :images
+  # has_many :categories, through: :category_products
+  # has_many :category_products
+  # belongs_to :supplier
 
   validates :price, numericality: { greater_than: 0 }
   validates :price, presence: true
@@ -28,12 +28,11 @@ class Product < ApplicationRecord
       name: name, 
       price: price, 
       description: description, 
-      images: images,
+      # images: images,
       is_discounted?: is_discounted?,
       tax: tax,
       total: total,
-      supplier: supplier.as_json,
-      images: images
+      supplier_id: supplier.as_json,
     }
   end
 

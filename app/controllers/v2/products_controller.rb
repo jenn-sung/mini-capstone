@@ -16,17 +16,14 @@ class V2::ProductsController < ApplicationController
   
   def create
     product = Product.new(
-      name: params['name'],
-      price: params['price'],
-      description: params['description'],
+      name: params[:name],
+      price: params[:price],
+      description: params[:description],
+      # supplier: params[:supplier]
       # image: params['image']
-      user_id: current_user.id
     )
-    if product.save
-      render json: product.as_json
-    else
-      render json: {errors: product.errors.full_messages}
-    end
+    product.save!
+    render json: product.as_json
   end
   
   def update
@@ -36,6 +33,7 @@ class V2::ProductsController < ApplicationController
       name: params['name'],
       price: params['price'],
       description: params['description'],
+      supplier: params['supplier']
       # image: params['image']
       )
       render json: product.as_json
