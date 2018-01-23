@@ -182,6 +182,23 @@ var EditProductPage = {
 };
 
 
+var CartedProductsPage = {
+  template: "#carted-products-page",
+  data: function() {
+    return {
+      products:[]
+
+    };
+  },
+  created: function() {
+    axios.get('/v2/carted_products').then(function(response) {
+      this.products = response.data;
+    }.bind(this));
+  },
+  methods: {},
+  computed: {}
+};
+
 var router = new VueRouter({
   routes: [
     { path: "/", component: HomePage },
@@ -190,7 +207,8 @@ var router = new VueRouter({
     { path: "/logout", component: LogoutPage },
     { path: "/products/new", component: NewProductPage },
     { path: "/products/:id", component: ShowProductPage },
-    { path: "/products/:id/edit", component: EditProductPage }
+    { path: "/products/:id/edit", component: EditProductPage },
+    { path: "/carted_products", component: CartedProductsPage}
   ],
   scrollBehavior: function(to, from, savedPosition) {
     return { x: 0, y: 0 };

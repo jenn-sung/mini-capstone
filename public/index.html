@@ -36,6 +36,9 @@
             <li class="nav-item">
               <a class="nav-link" href="/#/signup">Signup</a>
             </li>
+              <li class="nav-item">
+              <a class="nav-link" href="/#/carted_products">Shopping Cart</a>
+            </li>
             <li class="nav-item">
               <a class="nav-link" href="/#/logout">Logout</a>
             </li>
@@ -188,6 +191,22 @@
     </div>
     <button class="btn btn-primary" v-on:click="editProduct()">Edit a Product</button>
     </div>
+  </div>
+</template>
+
+<template id="carted-products-page">
+  <div class="vue-component">
+    <div class="row">
+      <div v-for="carted_product in carted_products" class="col-sm-6">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-name title">Album: {{ product.name }}</h5>
+            <p class="card-text description">Artist: {{ product.description }}</p>
+            <a href="#" class="btn btn-primary">Go somewhere</a>
+          </div>
+        </div>
+      </div>
+    </div>   
   </div>
 </template>
 

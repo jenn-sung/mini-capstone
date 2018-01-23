@@ -1,14 +1,10 @@
 class V2::CartedProductsController < ApplicationController
 
   def index
-    if current_user
-      carted_products = CartedProduct.where(user_id: current_user.id)
-      render json: carted_products.as_json
-    else
-      render json: carted_products.as_json
-    end
-
+    carted_products = CartedProduct.where(user_id: current_user.id).where(status: "carted")
+    render json: carted_products.as_json
   end
+
   def create
     carted_product = CartedProduct.new(
       status: 'carted',
